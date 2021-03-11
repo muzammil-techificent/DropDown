@@ -145,6 +145,14 @@ public final class DropDown: UIView {
         didSet { setNeedsUpdateConstraints() }
     }
     
+    /**
+    The offset from the top of the window when the drop down is shown below the anchor view.
+    DropDown applies this offset only if keyboard is hidden.
+    */
+    public var offsetFromWindowTop = CGFloat(0) {
+        didSet { setNeedsUpdateConstraints() }
+    }
+    
 	/**
 	The width of the drop down.
 
@@ -472,6 +480,13 @@ public final class DropDown: UIView {
 	public convenience init() {
 		self.init(frame: .zero)
 	}
+    
+    
+    public convenience init(topWidnowOffset: CGFloat, bottomWindowOffset: CGFloat) {
+        self.init(frame: .zero)
+        self.offsetFromWindowTop = topWidnowOffset
+        self.offsetFromWindowBottom = bottomWindowOffset
+    }
 
 	/**
 	Creates a new instance of a drop down.
@@ -747,7 +762,7 @@ extension DropDown {
 		let anchorViewMaxY = anchorView?.plainView.windowFrame?.maxY ?? 0
 
 		let x = anchorViewX + topOffset.x
-		var y = (anchorViewMaxY + topOffset.y) - tableHeight
+		var y = (anchorViewMaxY + topOffset.y) - tableHeight - offsetFromWindowTop
 
 		let windowY = window.bounds.minY + DPDConstant.UI.HeightPadding
 
