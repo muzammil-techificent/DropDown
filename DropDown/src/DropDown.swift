@@ -772,6 +772,7 @@ extension DropDown {
 		}
         
         if y < offsetFromWindowTop {
+            offscreenHeight = abs(offscreenHeight + offsetFromWindowTop - y)
             y = offsetFromWindowTop
         }
 		
